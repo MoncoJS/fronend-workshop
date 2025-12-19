@@ -2,9 +2,14 @@ import axios from 'axios'
 import type { User, Pagination } from './UserInterface'
 import { SweetAlert } from '@/utils/SweetAlert'
 
-export async function getUser(): Promise<{ users: User[], pagination: Pagination }> {
+export async function getUser(page = 1, limit = 10): Promise<{ users: User[], pagination: Pagination }> {
   try {
-    const res = await axios.get('/service/api/v3/users/')
+    const res = await axios.get('/service/api/v3/users/', {
+      params: {
+        page,
+        limit,
+      },
+    })
     const users = (res.data?.data?.userList || []) as User[]
     const pagination = (res.data?.data?.pagination || {}) as Pagination
 

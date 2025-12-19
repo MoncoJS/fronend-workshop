@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     async fetchUsers() {
-      const res = await getUser()
+      const res = await getUser(this.page)
       this.users = res.users
       this.totalPage = res.pagination.totalPage || 1
       if (this.users.length > 0) {
