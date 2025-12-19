@@ -17,6 +17,7 @@
         </div>
       </div>
     </v-card>
+    <v-pagination v-model="page" :length="totalPage" />
   </div>
 </template>
 
@@ -26,8 +27,7 @@ import { storeToRefs } from 'pinia'
 import type { User } from '@/stores/User/UserInterface'
 
 const store = useUserStore()
-const { users, selectedUser } = storeToRefs(store)
-
+const { users, selectedUser, page, totalPage } = storeToRefs(store)
 function selectUser(user: User) {
   store.selectUser(user)
 }

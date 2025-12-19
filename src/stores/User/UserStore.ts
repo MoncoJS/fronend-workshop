@@ -7,10 +7,14 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     users: [] as User[],
     selectedUser: null as User | null,
+    page: 1,
+    totalPage: 1,
   }),
   actions: {
     async fetchUsers() {
-      this.users = await getUser()
+      const res = await getUser()
+      this.users = res.users
+      this.totalPage = res.pagination.totalPage || 1
       if (this.users.length > 0) {
         this.selectedUser = this.users[0] || null
       }

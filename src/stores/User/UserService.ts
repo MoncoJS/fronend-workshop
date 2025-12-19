@@ -1,16 +1,17 @@
 import axios from 'axios'
-import type { User } from './UserInterface'
+import type { User, Pagination } from './UserInterface'
 import { SweetAlert } from '@/utils/SweetAlert'
 
-export async function getUser(): Promise<User[]> {
+export async function getUser(): Promise<{ users: User[], pagination: Pagination }> {
   try {
     const res = await axios.get('/service/api/v3/users/')
-    const apiData = (res.data?.data?.userList || []) as User[]
+    const users = (res.data?.data?.userList || []) as User[]
+    const pagination = (res.data?.data?.pagination || {}) as Pagination
 
-    return apiData
+    return { users, pagination }
   } catch (err) {
     console.error('getUser failed', err)
-    return []
+    return { users: [], pagination: {} as Pagination }
   }
 }
 
